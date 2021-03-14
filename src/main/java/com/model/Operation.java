@@ -1,16 +1,17 @@
 package com.model;
 
+import com.utilities.Utils;
+
 public class Operation {
-    private Polynomial polynomial;
+    //private Polynomial polynomial;
 
-    public Operation(Polynomial polynomial) {
-        this.polynomial = polynomial;
+    public Operation() {
+
     }
-
 
     public Polynomial add(Polynomial p, Polynomial q) {
         if(p.isZero() && q.isZero())
-            return new Polynomial();
+            return new Polynomial(0);
 
         if(!p.isZero() && q.isZero())
             return p;

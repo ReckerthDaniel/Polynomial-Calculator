@@ -32,6 +32,10 @@ public class Polynomial {
         this.getPolynomial().add(m);
     }
 
+    public void addMonomialList(ArrayList<Monomial> monomialArrayList){
+        this.polynomial.addAll(monomialArrayList);
+    }
+
     public Monomial getMonomial(int index){
         return this.getPolynomial().get(index);
     }
@@ -44,6 +48,10 @@ public class Polynomial {
 
     public boolean isZero() {
         return this.getPolynomial().size() == 0;
+    }
+
+    private void reduce(){
+        this.polynomial.removeIf(m -> m.getCoefficient().equals(0));
     }
 
     public void sortPolynomialByDescendingPower() {
@@ -61,10 +69,35 @@ public class Polynomial {
 
     public String printPolynomial(){
         StringBuilder str = new StringBuilder();
-        for (Monomial m: this.getPolynomial()){
-            str.append(m.getCoefficient() + "x^" + m.getPower() + "+");
+        this.reduce();
+        if(this.isZero())
+            return "0";
+        for(Monomial m: this.polynomial) {
+            if(m.getCoefficient().floatValue() > 0)
+                str.append("+");
+
+            if(m.getPower() == 0)
+                str.append(m.getCoefficient());
+            else if(m.getPower() == 1) {
+                if (m.getCoefficient().floatValue() == 1.0f)
+                    str.append("x");
+                else if (m.getCoefficient().floatValue() == -1.0f)
+                    str.append("-x");
+                else
+                    str.append(m.getCoefficient()).append("x");
+            }
+            else{
+                if(m.getCoefficient().floatValue() == 1.0f)
+                    str.append("x^").append(m.getPower());
+                else if(m.getCoefficient().floatValue() == -1.0f)
+                    str.append("-x^").append(m.getCoefficient());
+                else
+                    str.append(m.getCoefficient()).append("x^").append(m.getPower());
+            }
         }
+
         return str.toString();
+
     }
 
 
