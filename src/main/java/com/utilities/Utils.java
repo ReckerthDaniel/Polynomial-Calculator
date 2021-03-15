@@ -9,8 +9,6 @@ import java.util.regex.Pattern;
 
 public class Utils {
 
-
-
     public static Polynomial paddedPolynomial(Polynomial p, int degree){
         Polynomial paddedPolynomial = new Polynomial(degree);
 
@@ -20,7 +18,6 @@ public class Utils {
         }
         return paddedPolynomial;
     }
-
 
     private static int sign(Matcher m) {
         int sign = 1;
@@ -38,8 +35,7 @@ public class Utils {
         return sign;
     }
 
-
-    public static Polynomial isUserInputValid(String userStr){
+    public static Polynomial validateUserInput(String userStr){
         String str = userStr.replaceAll("\\s", "");
         // GROUP 1 - sign (optional for positive monomials) => ex: -2x, +2x, 2x
         // GROUP 2 - digit (optional if -1 or 1) => ex: -1x, x, +1x, x

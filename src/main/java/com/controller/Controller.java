@@ -13,8 +13,7 @@ import java.awt.event.FocusListener;
 
 public class Controller implements ActionListener{
     private Polynomial p, q;
-    private PolynomialCalculatorGUI calcView;
-
+    private final PolynomialCalculatorGUI calcView;
 
     public Controller(PolynomialCalculatorGUI calcView) {
         this.calcView = calcView;
@@ -92,7 +91,7 @@ public class Controller implements ActionListener{
                 calcView.setPoly1TxtFldText("9");
 
             if(calcView.getPrevSelectedTxtFld().equals(calcView.getPoly2TxtFld()))
-                calcView.getPoly2TxtFld().setText("9");
+                calcView.setPoly2TxtFldText("9");
         }
     }
 
@@ -124,10 +123,10 @@ public class Controller implements ActionListener{
         if(src.equals(calcView.getClearButton())){
             calcView.getPoly1TxtFld().setText("");
             calcView.getPoly2TxtFld().setText("");
-            calcView.getResultTxtFld().setText("");
+            calcView.getResultTxtArea().setText("");
         }
         if(src.equals(calcView.getEqualButton()) && !calcView.polyFldsEmpty()){
-            //calcView.setResultTxtFldText("result");
+            //calcView.setResultTxtAreaText("result");
         }
 
     }
@@ -140,11 +139,12 @@ public class Controller implements ActionListener{
             //return false;
         }
 
-        Polynomial p = Utils.isUserInputValid(pol1String);
+        Polynomial p = Utils.validateUserInput(pol1String);
+
         if(p == null)
             return false;
 
-        Polynomial q = Utils.isUserInputValid(pol2String);
+        Polynomial q = Utils.validateUserInput(pol2String);
         if(q == null)
             return false;
 
@@ -161,7 +161,52 @@ public class Controller implements ActionListener{
             if (src.equals(calcView.getAddButton())) {
                 Polynomial sum = op.add(p, q);
                 System.out.println(sum.toString());
-                calcView.setResultTxtFldText(sum.printPolynomial());
+                calcView.setResultTxtAreaText(sum.printPolynomial());
+            }
+            if(src.equals(calcView.getSubtractButton())) {
+                Polynomial diff = op.subtract(p, q);
+                calcView.setResultTxtAreaText(diff.printPolynomial());
+            }
+            if(src.equals(calcView.getMultiplyButton())) {
+                Polynomial mult = op.multiply(p, q);
+                calcView.setResultTxtAreaText(mult.printPolynomial());
+            }
+            if(src.equals(calcView.getDerivateButton())){
+                Polynomial derivative = new Polynomial();
+                if(!this.p.isZero())
+                    derivative = op.derivate(p);
+                else if(!this.q.isZero())
+                    derivative = op.derivate(q);
+                else
+                    derivative = op.derivate(p);
+                calcView.setResultTxtAreaText(derivative.printPolynomial());
+            }
+            if(src.equals(calcView.getIntegrateButton())){
+                Polynomial integration;
+                if(!this.p.isZero())
+                    integration = op.integrate(p);
+                else if(!this.q.isZero())
+                    integration = op.integrate(q);
+                else
+                    integration = op.derivate(p);
+                calcView.setResultTxtAreaText(integration.printPolynomial());
+            }
+            if(src.equals(calcView.getDivideButton())){
+                if(!(calcView.getPoly2TxtFld().getText().equals("") || calcView.getPoly2TxtFld().getText().equals("0"))){
+                    if(this.p.getPolynomialDegree() < this.q.getPolynomialDegree()){
+                        calcView.showWarning("Polynomial #2 cannot be greater!");
+                    }
+                    else {
+                        op.divide(p, q);
+                        calcView.getResultTxtArea().setText("");
+                        calcView.appendResultTxtArea("quotient: " + op.getQuotient().printPolynomial());
+                        calcView.appendResultTxtArea("\n");
+                        calcView.appendResultTxtArea("remainder: " + op.getRemainder().printPolynomial());
+                    }
+                }
+                else{
+                    calcView.showError("Cannot divide by zero!");
+                }
             }
         }
         else
@@ -171,7 +216,6 @@ public class Controller implements ActionListener{
                     "Ex: 3x^4-x^2+5x^3+25+x");
     }
 
-
     @Override
     public void actionPerformed(ActionEvent e) {
         Object src = e.getSource();
@@ -179,8 +223,6 @@ public class Controller implements ActionListener{
         performUtilitiesButtonsAction(src);
         performOperationButtonsAction(src);
     }
-
-
 
     public class TxtFieldFocus implements FocusListener{
         @Override

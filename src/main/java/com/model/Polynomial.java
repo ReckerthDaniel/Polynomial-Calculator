@@ -24,34 +24,20 @@ public class Polynomial {
         return polynomial;
     }
 
-    public void setPolynomial(ArrayList<Monomial> polynomial) {
-        this.polynomial = polynomial;
-    }
-
     public void addMonomial(Monomial m){
         this.getPolynomial().add(m);
-    }
-
-    public void addMonomialList(ArrayList<Monomial> monomialArrayList){
-        this.polynomial.addAll(monomialArrayList);
     }
 
     public Monomial getMonomial(int index){
         return this.getPolynomial().get(index);
     }
 
-
-    public void copyPolynomial(Polynomial p) {
-        for (Monomial m: p.getPolynomial())
-            this.getPolynomial().add(m);
-    }
-
     public boolean isZero() {
         return this.getPolynomial().size() == 0;
     }
 
-    private void reduce(){
-        this.polynomial.removeIf(m -> m.getCoefficient().equals(0));
+    public void reduce(){
+        this.polynomial.removeIf(m -> m.getRealCoefficient() == 0.0f);
     }
 
     public void sortPolynomialByDescendingPower() {
@@ -90,7 +76,7 @@ public class Polynomial {
                 if(m.getCoefficient().floatValue() == 1.0f)
                     str.append("x^").append(m.getPower());
                 else if(m.getCoefficient().floatValue() == -1.0f)
-                    str.append("-x^").append(m.getCoefficient());
+                    str.append("-x^").append(m.getPower());
                 else
                     str.append(m.getCoefficient()).append("x^").append(m.getPower());
             }

@@ -41,6 +41,14 @@ public class Monomial {
         return coefficient;
     }
 
+    public int getIntegerCoefficient(){
+        return coefficient.intValue();
+    }
+
+    public float getRealCoefficient(){
+        return coefficient.floatValue();
+    }
+
     public void setCoefficient(Number coefficient) {
         this.coefficient = coefficient;
     }
@@ -57,7 +65,7 @@ public class Monomial {
         Monomial sum = new Monomial();
         if(this.hasEqualPower(m)){
             sum.setPower(m.getPower());
-            sum.setCoefficient(this.getCoefficient().intValue() + m.getCoefficient().intValue());
+            sum.setCoefficient(this.getIntegerCoefficient() + m.getIntegerCoefficient());
         }
         else{
             sum.setPower(this.power);
@@ -70,12 +78,35 @@ public class Monomial {
         Monomial diff = new Monomial();
         if(this.hasEqualPower(m)){
             diff.setPower(m.getPower());
-            diff.setCoefficient(this.getCoefficient().intValue() - m.getCoefficient().intValue());
+            diff.setCoefficient(this.getIntegerCoefficient() - m.getIntegerCoefficient());
         }
         return diff;
     }
 
-    public String printMonomial(){
-        return this.getCoefficient() + "x^" + this.getPower();
+    public Monomial multiplyRealCoeff(Monomial m) {
+        return new Monomial(this.getPower() + m.getPower(), this.getRealCoefficient() * m.getRealCoefficient());
     }
+
+    public Monomial multiplyIntegerCoeff(Monomial m){
+        return new Monomial(this.getPower() + m.getPower(), this.getIntegerCoefficient() * m.getIntegerCoefficient());
+
+    }
+
+    public void derivate(){
+        this.setCoefficient(this.getIntegerCoefficient() * this.getPower());
+        this.setPower(this.getPower() - 1);
+    }
+
+    public void integrate(){
+        this.setPower(this.getPower() + 1);
+        this.setCoefficient(this.getRealCoefficient() / (this.getPower()));
+    }
+
+    public Monomial divide(Monomial m) {
+        if(m.getRealCoefficient() != 0)
+            return new Monomial(this.getPower() - m.getPower(), this.getRealCoefficient()/m.getRealCoefficient());
+        else
+            return null;
+    }
+
 }

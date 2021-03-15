@@ -12,7 +12,7 @@ public class PolynomialCalculatorGUI extends JFrame {
     private JLabel polynomial1JLabel;
     private JTextField poly1TxtFld;
     private JTextField poly2TxtFld;
-    private JTextField resultTxtFld;
+    //private JTextField resultTxtFld;
     private JLabel polynomial2JLabel;
     private JLabel resultJLabel;
     private JButton nb7Button;
@@ -38,6 +38,7 @@ public class PolynomialCalculatorGUI extends JFrame {
     private JButton multiplyButton;
     private JButton equalButton;
     private JButton clearButton;
+    private JTextArea resultTxtArea;
     private JTextField prevSelectedTxtFld;
 
     Controller controller = new Controller(this) ;
@@ -58,9 +59,9 @@ public class PolynomialCalculatorGUI extends JFrame {
     private void createUIComponents() {
         // TODO: place custom component creation code here
         integrateButton.setText("\u222B");
-        resultTxtFld.setFont(resultTxtFld.getFont().deriveFont(Font.BOLD));
-        resultTxtFld.setDisabledTextColor(new Color(0,0,0));
-        resultTxtFld.setEnabled(false);
+        resultTxtArea.setFont(resultTxtArea.getFont().deriveFont(Font.BOLD));
+        resultTxtArea.setDisabledTextColor(new Color(0,0,0));
+        resultTxtArea.setEnabled(false);
 
     }
 
@@ -72,8 +73,8 @@ public class PolynomialCalculatorGUI extends JFrame {
         return poly2TxtFld;
     }
 
-    public JTextField getResultTxtFld() {
-        return resultTxtFld;
+    public JTextArea getResultTxtArea() {
+        return resultTxtArea;
     }
 
     public JButton getNb7Button() {
@@ -206,8 +207,12 @@ public class PolynomialCalculatorGUI extends JFrame {
         poly2TxtFld.setText(getPoly2TxtFldText() + txt);
     }
 
-    public void setResultTxtFldText(String txt){
-        resultTxtFld.setText(txt);
+    public void setResultTxtAreaText(String txt){
+        resultTxtArea.setText(txt);
+    }
+
+    public void appendResultTxtArea(String txt){
+        resultTxtArea.append(txt);
     }
 
     public void addActionListeners(ActionListener e){
@@ -228,6 +233,11 @@ public class PolynomialCalculatorGUI extends JFrame {
         this.powerButton.addActionListener(e);
         this.clearButton.addActionListener(e);
         this.addButton.addActionListener(e);
+        this.subtractButton.addActionListener(e);
+        this.multiplyButton.addActionListener(e);
+        this.derivateButton.addActionListener(e);
+        this.integrateButton.addActionListener(e);
+        this.divideButton.addActionListener(e);
     }
 
     public void addFocusListener(FocusListener f){
