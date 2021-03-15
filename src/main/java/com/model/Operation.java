@@ -3,7 +3,6 @@ package com.model;
 import com.utilities.Utils;
 
 public class Operation {
-    //private Polynomial polynomial;
     private Polynomial quotient;
     private Polynomial remainder;
 

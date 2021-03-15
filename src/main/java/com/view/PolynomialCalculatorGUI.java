@@ -12,7 +12,6 @@ public class PolynomialCalculatorGUI extends JFrame {
     private JLabel polynomial1JLabel;
     private JTextField poly1TxtFld;
     private JTextField poly2TxtFld;
-    //private JTextField resultTxtFld;
     private JLabel polynomial2JLabel;
     private JLabel resultJLabel;
     private JButton nb7Button;

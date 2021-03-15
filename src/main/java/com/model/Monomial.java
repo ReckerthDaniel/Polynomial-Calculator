@@ -4,16 +4,10 @@ public class Monomial {
     private int power;
     private Number coefficient;
 
-    /**
-     * Empty constructor. Default value for power.
-     */
+
     public Monomial() {
     }
 
-    /**
-     * Constructor with given power.
-     * @param power
-     */
     public Monomial(int power, Integer coefficient) {
         this.power = power;
         this.coefficient = coefficient;
